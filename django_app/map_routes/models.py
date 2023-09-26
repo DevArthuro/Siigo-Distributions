@@ -6,19 +6,13 @@ from locations.models import Location
 from connections.models import Connection
 
 
-class Scenario(BaseModel):
+class MapRoute(BaseModel):
 
     name = models.CharField(
         max_length=120,
         unique=False,
         null=False,
         blank=False
-    )
-
-    description = models.TextField(
-        max_length=700,
-        null=True,
-        blank=True
     )
 
     slug = models.SlugField(
@@ -42,12 +36,12 @@ class Scenario(BaseModel):
 
     connections = models.ManyToManyField(
         Connection,
-        related_name='scenario'
+        related_name='map_route'
     )
 
     locations = models.ManyToManyField(
         Location,
-        related_name='scenario'
+        related_name='map_route'
     )
 
     def __str__(self):
