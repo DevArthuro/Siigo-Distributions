@@ -1,14 +1,13 @@
 from rest_framework import serializers
-from .models import Scenario
+from .models import MapRoute
 
 
-class ScenarioSerializer(serializers.ModelSerializer):
+class MapRouteSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Scenario
+        model = MapRoute
         fields = [
             'id',
             'name',
-            'description',
             'slug',
             'starts_at',
             'ends_at',
@@ -22,3 +21,8 @@ class ScenarioSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',
         ]
+
+
+class CreateMapRouteSerializer(serializers.Serializer):
+
+    pass

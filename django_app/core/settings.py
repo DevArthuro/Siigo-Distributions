@@ -35,7 +35,7 @@ INSTALLED_APPS = [
 
     'locations',
     'connections',
-    'scenarios',
+    'map_routes',
 ]
 
 MIDDLEWARE = [
