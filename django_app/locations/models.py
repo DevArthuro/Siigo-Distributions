@@ -10,7 +10,7 @@ class Location(BaseModel):
         max_length=20,
         null=False,
         blank=False,
-        default=uuid4().hex[:20],
+        default=str(uuid4().hex[:20]),
         unique=True
     )
 

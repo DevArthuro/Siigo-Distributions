@@ -31,6 +31,7 @@ class Graph:
         return False
     
     def get_vertex(self, id):
+        print(f'This is it: {id}')
         return self.graph_dict.copy().get(id)
 
     def imprimir_gráfica(self):
@@ -57,6 +58,24 @@ class Graph:
     def dijktra(self, vertice_init):
         if vertice_init.id in self.graph_dict:
             self.graph_dict[vertice_init.id].distancia = 0
+            actual = vertice_init
+            no_visitados = [i for i in self.graph_dict]
+        
+            while len(no_visitados):
+                for vecino in self.graph_dict[actual.id].neigbhbourns:
+                    if self.graph_dict[vecino[0].id].visitado == False:
+                        if self.graph_dict[actual.id].distancia + vecino[1] < self.graph_dict[vecino[0].id].distancia:
+                            self.graph_dict[vecino[0].id].distancia = self.graph_dict[actual.id].distancia + vecino[1]
+                            self.graph_dict[vecino[0].id].padre = actual
+                
+                self.graph_dict[actual.id].visitado = True
+                no_visitados.remove(actual.id)
+                
+                actual = self.minium(no_visitados)
+
+    def dijktra_copy(self, vertice_init):
+        if vertice_init in self.graph_dict:
+            self.graph_dict[vertice_init].distancia = 0
             actual = vertice_init
             no_visitados = [i for i in self.graph_dict]
         
@@ -130,26 +149,28 @@ def build_graph():
     g.imprimir_gráfica()
 
 
-def build_graph(edges_list, vertex_list):
+def build_graph(edges_list, vertex_list, starts_at, ends_at):
     g = Graph()
     edge = Edges()
 
-    edges = [
-        """('1', '2', 10, True),
-        ('1', '4', 5, True),
-        ('2', '6', 9, True), 
-        ('2', '5', 5, True),
-        ('2', '3', 2, True),
-        ('3', '8', 3, False),
-        ('3', '7', 20, False),
-        ('4', '7', 1, False),"""
-    ]
+    print(edges_list)
+    print(starts_at)
+    print(ends_at)
+
+    edges = []
+
 
     for i in edges_list:
-        edges.append(i) 
+        edges.append(i)
 
-    for index, element in enumerate(vertex_list):
-        g.add_vertex(element, index)
+
+    """for index, element in enumerate(vertex_list.id):
+        print(index, element)
+        g.add_vertex(element, index)"""
+
+    for vertex in vertex_list:
+        print(vertex)
+        g.add_vertex(vertex.id, vertex.data)
 
     for v1, v2, peso, boolean in edges:
         edge.add_edge(v1 = g.get_vertex(v1), v2 = g.get_vertex(v2), weight= peso, un_direct=boolean)
@@ -158,10 +179,14 @@ def build_graph(edges_list, vertex_list):
     for key, value in edge.get_edges().items():
         print(key, [i.id for i in value])
     
-    g.dijktra(g.get_vertex('5'))
-    print(g.camino(g.get_vertex('5'), g.get_vertex('7')))
+    g.dijktra(g.get_vertex(starts_at))
+    print('End of the algorithm')
+    print(g.camino(g.get_vertex(starts_at), g.get_vertex(ends_at)))
     print("\nLos valores de la gráfica son los siguientes: ")
     g.imprimir_gráfica()
+
+
+    return True
 
 
 if __name__ == "__main__":

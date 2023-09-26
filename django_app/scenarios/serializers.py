@@ -12,7 +12,6 @@ class ScenarioSerializer(serializers.ModelSerializer):
             'slug',
             'starts_at',
             'ends_at',
-            'route',
             'created_at',
             'updated_at',
         ]
