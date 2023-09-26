@@ -8,11 +8,12 @@
 <script setup>
 import navbar from '../components/Navbar.vue'
 import {onMounted } from 'vue'
+import {useRoute } from 'vue-router'
 import Graph from "graphology";
 import Sigma from "sigma";
 import { useDataGraph } from '../stores/useGraphSpeccifictMap'
 
-
+const param = useRoute()
 const dataStore = useDataGraph()
 
 const data = dataStore.getMap()

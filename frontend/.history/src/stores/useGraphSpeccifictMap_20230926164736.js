@@ -8,7 +8,7 @@ export const useDataGraph = defineStore('GraphData', {
     actions: {
         getMap(slug)
         {
-            const data = {
+            const data = const data = {
                 locations: [
                   {
                     id: 1,
@@ -59,53 +59,53 @@ export const useDataGraph = defineStore('GraphData', {
                     y: 20
                   }
                 ],
-                connections: [
+                edges: [
                   {
                     id: 1,
-                    start: 1,
-                    end: 2,
+                    source: 1,
+                    target: 2,
                     weight: 20
                   },
                   {
                     id: 2,
-                    start: 1,
-                    end: 4,
+                    source: 1,
+                    target: 4,
                     weight: 20
                   },
                   {
                     id: 3,
-                    start: 2,
-                    end: 6,
+                    source: 2,
+                    target: 6,
                     weight: 20
                   },
                   {
                     id: 4,
-                    start: 2,
-                    end: 5,
+                    source: 2,
+                    target: 5,
                     weight: 20
                   },
                   {
                     id: 5,
-                    start: 2,
-                    end: 3,
+                    source: 2,
+                    target: 3,
                     weight: 20
                   },
                   {
                     id: 6,
-                    start: 3,
-                    end: 8,
+                    source: 3,
+                    target: 8,
                     weight: 20
                   },
                   {
                     id: 7,
-                    start: 3,
-                    end: 7,
+                    source: 3,
+                    target: 7,
                     weight: 20
                   },
                   {
                     id: 8,
-                    start: 7,
-                    end: 4,
+                    source: 7,
+                    target: 4,
                     weight: 20
                   }
                 ]

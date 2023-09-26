@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sigma.js example</title>
+</head>
+<body>
+  <div id="graph"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.0.0-alpha34/sigma.min.js"></script>
+  <script>
+    import sigma from 'sigma.js';
+    const graph = new sigma.classes.graph();
+
+    const node1 = { id: "1" };
+    const node2 = { id: "2" };
+
+    graph.addNode(node1);
+    graph.addNode(node2);
+
+    const edge = {
+      source: "1",
+      target: "2",
+    };
+
+    graph.addEdge(edge);
+
+    graph.render(document.getElementById("graph"));
+  </script>
+</body>
+</html>
