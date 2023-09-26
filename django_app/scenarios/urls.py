@@ -3,5 +3,6 @@ from .views import *
 
 
 urlpatterns = [
-    path('', )
+    path('', ScenariosList.as_view()),
+    path('<slug:scenario_slug>/', BestWay.as_view())
 ]
