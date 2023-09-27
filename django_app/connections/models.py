@@ -1,6 +1,7 @@
 from django.db import models
 from utils.models import BaseModel
 from locations.models import Location
+from map_routes.models import MapRoute
 
 
 class Connection(BaseModel):
@@ -25,6 +26,13 @@ class Connection(BaseModel):
         default=True,
         null=False,
         blank=False
+    )
+
+    map_route = models.ForeignKey(
+        MapRoute,
+        related_name='connections',
+        on_delete=models.CASCADE,
+        default=MapRoute.objects.first().id
     )
 
     def __str__(self):

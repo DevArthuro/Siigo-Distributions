@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.db.models.functions import Cast
 from django.db.models import CharField
+from django.db import IntegrityError
 
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
@@ -11,7 +12,6 @@ from rest_framework import status
 from .models import MapRoute
 from locations.models import Location
 from connections.models import Connection
-from locations.models import Location
 from .serializers import MapRouteSerializer
 from utils.views import build_graph, Vertex
 
@@ -30,21 +30,95 @@ class MapRouteList(APIView):
 
 @api_view(['POST'])
 def create_route(request):
+
+    map_route_name = ''
+
+    if 'nombre' in request.data.keys():
+        map_route_name = request.data['nombre']
+
+    try:
+        creating_map_route = MapRoute.objects.create(
+            name = map_route_name
+        )
+        creating_map_route.save()
+        route_id = creating_map_route.id
+    except IntegrityError as e:
+        return Response(
+            {'message':f'It was not possible to save the route: {e}'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
     if request.data['ubicaciones'] is None:
         return Response(
             {'message':"Bad request"},
             status=status.HTTP_400_BAD_REQUEST
         )
     
+    locations = set()
+
+    map_route = MapRoute.objects.get(
+        id=route_id
+    )
+    
     for location in request.data['ubicaciones']:
         try:
-            Location.objects.create(
+            creating_location = Location.objects.create(
                 label = location['nombre'],
                 position_x = location['posX'],
                 position_y = location['posY'],
+                map_route = map_route
             )
+            print(creating_location)
+            creating_location.save()
+            locations.add(creating_location.id)
+        except IntegrityError as e:
+            return Response(
+                {'message':f'It was not possible to save the locations: {e}'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+    connections = set()
+
+    for connection in request.data['conexiones']:
+        try:
+            creating_connection = Connection.objects.create(
+                first_location = connection['ubicacion1'],
+                second_location = connection['ubicacion2'],
+                weight = connection['peso'],
+                map_route = map_route
+            )
+            creating_connection.save()
+            connections.add(creating_connection.id)
         except:
-            pass
+            return Response(
+                {'message':'It was not possible to save the connections'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+    return Response(
+        {'message':'Successful'},
+        status=status.HTTP_201_CREATED
+    )
+
+    map_route_name = ''
+
+    if 'nombre' in request.data:
+        map_route_name = request.data['nombre']
+
+    beginning = Location.objects.get()
+
+    try:
+        MapRoute.objects.create(
+            name = map_route_name,
+            starts_at = 1,
+            connections=connections,
+            locations=locations,
+        )
+    except:
+        return Response(
+            {'message':'It was not possible to save the route'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
     
 
 class RouteDetail(APIView):
