@@ -32,7 +32,7 @@ class Connection(BaseModel):
         MapRoute,
         related_name='connections',
         on_delete=models.CASCADE,
-        default=MapRoute.objects.first().id
+        default=MapRoute.get_default_pk
     )
 
     def __str__(self):

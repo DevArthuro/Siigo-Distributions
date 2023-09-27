@@ -11,7 +11,7 @@ class MapRoute(BaseModel):
         unique=False,
         null=False,
         blank=False,
-        default=str(uuid4())
+        default=uuid4
     )
 
     slug = models.SlugField(
@@ -47,4 +47,11 @@ class MapRoute(BaseModel):
         name_slug = slugify(f'{self.name}-{str(uuid4().hex[:10])}')
         self.slug = name_slug
         return super().save(*args, **kwargs)
+    
+    @classmethod
+    def get_default_pk(cls):
+        map_route, created = cls.objects.get_or_create(
+            name='default map_route'
+        )
+        return map_route.pk
     

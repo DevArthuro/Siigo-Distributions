@@ -32,15 +32,11 @@ class Location(BaseModel):
         MapRoute,
         related_name='locations',
         on_delete=models.CASCADE,
-        default=MapRoute.objects.first().id
+        default=MapRoute.get_default_pk
     )
 
 
     class Meta:
-        unique_together = [
-            'position_x', 
-            'position_y'
-        ]
 
         constraints = [
             models.UniqueConstraint(

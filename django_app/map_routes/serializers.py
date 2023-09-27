@@ -9,7 +9,6 @@ class MapRouteSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'slug',
-            'starts_at',
             'created_at',
             'updated_at',
         ]

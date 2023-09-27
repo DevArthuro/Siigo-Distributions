@@ -29,7 +29,7 @@ class MapRouteList(APIView):
     
 
 @api_view(['POST'])
-def create_route(request):
+def create_map_route(request):
 
     map_route_name = ''
 
@@ -48,13 +48,13 @@ def create_route(request):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-    if request.data['ubicaciones'] is None:
+    if request.data['ubicaciones'] is None or len(request.data['ubicaciones']) == 0:
         return Response(
             {'message':"Bad request"},
             status=status.HTTP_400_BAD_REQUEST
         )
     
-    locations = set()
+    locations_ids = set()
 
     map_route = MapRoute.objects.get(
         id=route_id
@@ -68,109 +68,113 @@ def create_route(request):
                 position_y = location['posY'],
                 map_route = map_route
             )
-            print(creating_location)
             creating_location.save()
-            locations.add(creating_location.id)
+            locations_ids.add(creating_location.id)
         except IntegrityError as e:
+            """map_route.delete()
+            for location in locations_ids:
+                object_location = Location.objects.get(
+                    id=location
+                )
+                object_location.delete()"""
             return Response(
                 {'message':f'It was not possible to save the locations: {e}'},
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-    connections = set()
+    connections_ids = set()
 
     for connection in request.data['conexiones']:
         try:
+            first_location = Location.objects.get(
+                label=connection['ubicacion1'],
+                map_route=map_route.id
+            )
+
+            second_location = Location.objects.get(
+                label=connection['ubicacion2'],
+                map_route=map_route.id
+            )
+
             creating_connection = Connection.objects.create(
-                first_location = connection['ubicacion1'],
-                second_location = connection['ubicacion2'],
+                first_location = first_location,
+                second_location = second_location,
                 weight = connection['peso'],
                 map_route = map_route
             )
             creating_connection.save()
-            connections.add(creating_connection.id)
-        except:
+            connections_ids.add(creating_connection.id)
+        except IntegrityError as e:
+            """map_route.delete()
+            for location in locations_ids:
+                object_location = Location.objects.get(
+                    id=location
+                )
+                object_location.delete()
+            for connection in connections_ids:
+                object_connection = Connection.objects.get(
+                    id=connection
+                )
+                object_connection.delete()"""
             return Response(
-                {'message':'It was not possible to save the connections'},
+                {'message':f'It was not possible to save the connections: {e}'},
                 status=status.HTTP_400_BAD_REQUEST
             )
         
     return Response(
-        {'message':'Successful'},
+        {'message':'Map route was successfully created'},
         status=status.HTTP_201_CREATED
     )
-
-    map_route_name = ''
-
-    if 'nombre' in request.data:
-        map_route_name = request.data['nombre']
-
-    beginning = Location.objects.get()
-
-    try:
-        MapRoute.objects.create(
-            name = map_route_name,
-            starts_at = 1,
-            connections=connections,
-            locations=locations,
-        )
-    except:
-        return Response(
-            {'message':'It was not possible to save the route'},
-            status=status.HTTP_400_BAD_REQUEST
-        )
     
 
-class RouteDetail(APIView):
+@api_view(['POST'])
+def get_most_optimal_path(self, request, map_route_slug, format=None):
 
-    def get(self, request, map_route_slug, format=None):
+    map_route = get_object_or_404(
+        MapRoute, 
+        slug=map_route_slug
+    )
 
-        map_route = get_object_or_404(
-            MapRoute, 
-            slug=map_route_slug
+    edges = []
+
+    connections = get_list_or_404(
+        Connection, 
+        map_route=map_route.id
         )
+    
+    for connection in connections:
+        new_connection = tuple((
+            connection.first_location.id.hex, 
+            connection.second_location.id.hex,
+            connection.weight,
+            connection.bidirectional)
+        )
+        edges.append(new_connection)
 
+    locations = get_list_or_404(
+        Location,
+        map_route=map_route
+        )
+    
+    vertexes = []
 
-        edges = []
+    for location in locations:
+        data = [location.position_x, location.position_y]
+        new_vertex = Vertex(location.id.hex, data)
+        vertexes.append(new_vertex)
+    
+    starts_at = map_route.starts_at.id.hex
+    ends_at = map_route.ends_at.id.hex
+    
+    try:
+        build_graph(
+            edges, 
+            vertexes, 
+            starts_at, 
+            ends_at
+        )
+    except:
+        pass
 
-        connections = get_list_or_404(
-            Connection, 
-            map_route=map_route.id
-            )
-        
-        for connection in connections:
-            new_connection = tuple((
-                connection.first_location.id.hex, 
-                connection.second_location.id.hex,
-                connection.weight,
-                connection.bidirectional)
-            )
-            edges.append(new_connection)
-
-        locations = get_list_or_404(
-            Location,
-            map_route=map_route
-            )
-        
-        vertexes = []
-
-        for location in locations:
-            data = [location.position_x, location.position_y]
-            new_vertex = Vertex(location.id.hex, data)
-            vertexes.append(new_vertex)
-        
-        starts_at = map_route.starts_at.id.hex
-        ends_at = map_route.ends_at.id.hex
-        
-        try:
-            build_graph(
-                edges, 
-                vertexes, 
-                starts_at, 
-                ends_at
-            )
-        except:
-            pass
-
-        return Response({'message': 'Did it'})
+    return Response({'message': 'Did it'})
 
