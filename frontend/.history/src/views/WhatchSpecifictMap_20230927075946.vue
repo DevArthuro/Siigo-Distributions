@@ -1,9 +1,7 @@
 <template>
     <navbar/>
     <div class="container  mt-4">
-      
       <div class="row">
-        <tableToManageMap :data="data" />
         <div class=" col-lg-7 ms-lg-3 col-ms-12">
             <div id="sigma-container" class="sigma-container" style="height: 80vh; padding: 0; margin: 0 magin-top: 10px;"></div>
         </div>
@@ -18,7 +16,6 @@ import Graph from "graphology";
 import Sigma from "sigma";
 import { useDataGraph } from '../stores/useGraphSpeccifictMap'
 import uploadToJson from '../components/CreateNewMap.vue'
-import tableToManageMap from '../components/TableToManageMap.vue'
 
 const dataStore = useDataGraph()
 
