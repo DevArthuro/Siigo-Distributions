@@ -28,25 +28,47 @@ class MapRouteList(APIView):
         )
     
 
+def get_or_create_map_route(map_route_name):
+
+    try:
+        route_id = MapRoute.objects.get(
+            name = map_route_name
+        ).id
+
+        if route_id:
+            return route_id
+    except MapRoute.DoesNotExist:
+        try:
+            creating_map_route = MapRoute.objects.create(
+                name = map_route_name
+            )
+            creating_map_route.save()
+            route_id = creating_map_route.id
+        except IntegrityError as e:
+            return Response(
+                {'message':f'It was not possible to save the route: {e}'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+    
+    return route_id
+
+
+def get_or_create_location():
+    pass
+
+
 @api_view(['POST'])
-def create_map_route(request):
+def create_set(request):
 
     map_route_name = ''
 
-    if 'nombre' in request.data.keys():
-        map_route_name = request.data['nombre']
+    from uuid import uuid4
+    if len(request.data['nombre'].strip(' ')) == 0 or 'nombre' not in request.data.keys():
+        map_route_name = uuid4().hex[:20]
 
-    try:
-        creating_map_route = MapRoute.objects.create(
-            name = map_route_name
-        )
-        creating_map_route.save()
-        route_id = creating_map_route.id
-    except IntegrityError as e:
-        return Response(
-            {'message':f'It was not possible to save the route: {e}'},
-            status=status.HTTP_400_BAD_REQUEST
-        )
+    if 'nombre' in request.data.keys() and len(request.data['nombre'].strip(' ')) != 0:
+        map_route_name = request.data['nombre']
+        
 
     if request.data['ubicaciones'] is None or len(request.data['ubicaciones']) == 0:
         return Response(
@@ -56,31 +78,60 @@ def create_map_route(request):
     
     locations_ids = set()
 
+    route_id = get_or_create_map_route(map_route_name)
+
     map_route = MapRoute.objects.get(
         id=route_id
     )
     
     for location in request.data['ubicaciones']:
         try:
-            creating_location = Location.objects.create(
-                label = location['nombre'],
+            object_location = Location.objects.get(
                 position_x = location['posX'],
                 position_y = location['posY'],
-                map_route = map_route
+                map_route = route_id
             )
-            creating_location.save()
-            locations_ids.add(creating_location.id)
-        except IntegrityError as e:
-            """map_route.delete()
-            for location in locations_ids:
-                object_location = Location.objects.get(
-                    id=location
+
+            if object_location.label != location['nombre']:
+                return Response(
+                    {'message':f"The positions {location['posX']} and {location['posY']} are "\
+                     "already assigned to another location"},
+                    status=status.HTTP_400_BAD_REQUEST
                 )
-                object_location.delete()"""
-            return Response(
-                {'message':f'It was not possible to save the locations: {e}'},
-                status=status.HTTP_400_BAD_REQUEST
+            
+            object_location = Location.objects.get(
+                label = location['nombre'],
+                map_route = route_id
             )
+
+            """Location.objects.update(
+                position_x = location['posX'],
+                position_y = location['posY']
+            )"""
+
+            continue
+
+        except Location.DoesNotExist:
+            try:
+                creating_location = Location.objects.create(
+                    label = location['nombre'],
+                    position_x = location['posX'],
+                    position_y = location['posY'],
+                    map_route = map_route
+                )
+                creating_location.save()
+                locations_ids.add(creating_location.id)
+            except IntegrityError as e:
+                """map_route.delete()
+                for location in locations_ids:
+                    object_location = Location.objects.get(
+                        id=location
+                    )
+                    object_location.delete()"""
+                return Response(
+                    {'message':f'It was not possible to save the locations: {e}'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
         
     connections_ids = set()
 
@@ -96,31 +147,39 @@ def create_map_route(request):
                 map_route=map_route.id
             )
 
-            creating_connection = Connection.objects.create(
-                first_location = first_location,
-                second_location = second_location,
-                weight = connection['peso'],
-                map_route = map_route
-            )
-            creating_connection.save()
-            connections_ids.add(creating_connection.id)
-        except IntegrityError as e:
-            """map_route.delete()
-            for location in locations_ids:
-                object_location = Location.objects.get(
-                    id=location
+            if Connection.objects.get(
+                first_location = first_location.id,
+                second_location = second_location.id,
+                map_route = route_id
+            ):
+                continue
+        except Connection.DoesNotExist:
+            try:
+                creating_connection = Connection.objects.create(
+                    first_location = first_location,
+                    second_location = second_location,
+                    weight = connection['peso'],
+                    map_route = map_route
                 )
-                object_location.delete()
-            for connection in connections_ids:
-                object_connection = Connection.objects.get(
-                    id=connection
+                creating_connection.save()
+                connections_ids.add(creating_connection.id)
+            except IntegrityError as e:
+                """map_route.delete()
+                for location in locations_ids:
+                    object_location = Location.objects.get(
+                        id=location
+                    )
+                    object_location.delete()
+                for connection in connections_ids:
+                    object_connection = Connection.objects.get(
+                        id=connection
+                    )
+                    object_connection.delete()"""
+                return Response(
+                    {'message':f'It was not possible to save the connections: {e}'},
+                    status=status.HTTP_400_BAD_REQUEST
                 )
-                object_connection.delete()"""
-            return Response(
-                {'message':f'It was not possible to save the connections: {e}'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        
+            
     return Response(
         {'message':'Map route was successfully created'},
         status=status.HTTP_201_CREATED

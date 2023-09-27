@@ -8,10 +8,10 @@ class MapRoute(BaseModel):
 
     name = models.CharField(
         max_length=120,
-        unique=False,
+        unique=True,
         null=False,
         blank=False,
-        default=uuid4
+        default=uuid4()
     )
 
     slug = models.SlugField(
