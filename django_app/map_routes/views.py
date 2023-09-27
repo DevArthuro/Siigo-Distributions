@@ -86,6 +86,16 @@ def create_set(request):
     
     for location in request.data['ubicaciones']:
         try:
+            second_object_location = Location.objects.get(
+                    label = location['nombre'],
+                    map_route = route_id
+                )
+            if  second_object_location:
+                second_object_location.position_x = location['posX']
+                second_object_location.position_y = location['posY']
+                second_object_location.save()
+                continue
+
             object_location = Location.objects.get(
                 position_x = location['posX'],
                 position_y = location['posY'],
@@ -95,21 +105,10 @@ def create_set(request):
             if object_location.label != location['nombre']:
                 return Response(
                     {'message':f"The positions {location['posX']} and {location['posY']} are "\
-                     "already assigned to another location"},
+                    "already assigned to another location"},
                     status=status.HTTP_400_BAD_REQUEST
                 )
-            
-            object_location = Location.objects.get(
-                label = location['nombre'],
-                map_route = route_id
-            )
-
-            """Location.objects.update(
-                position_x = location['posX'],
-                position_y = location['posY']
-            )"""
-
-            continue
+                
 
         except Location.DoesNotExist:
             try:
