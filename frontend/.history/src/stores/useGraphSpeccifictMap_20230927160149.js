@@ -7,8 +7,8 @@ export const useDataGraph = defineStore("GraphData", {
   }),
 
   actions: {
-    getData(slug) {
-      const data = [
+    getMap(slug) {
+      const data_quemada = [
         {
           id: "",
           name: "cartagena",
@@ -218,24 +218,32 @@ export const useDataGraph = defineStore("GraphData", {
         },
       ];
 
-      return data;
-    },
+      // Función para realizar la solicitud Axios
+      const fetchData = () => {
+        return new Promise((resolve, reject) => {
+          axios
+            .get(this.url)
+            .then((response) => {
+              // La solicitud se completó exitosamente, resuelve la promesa con los datos
+              resolve(response.data);
+            })
+            .catch((error) => {
+              // La solicitud falló, rechaza la promesa con el error
+              reject(error);
+            });
+        });
+      };
 
-    getMap ()
-    {
-      fetch(this.url, {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json;',
-          'Authorization': 'Token 8a0af303301ae408ec1d7d496d3f1f8c7743ee0e'
-        }
-      })
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
-        return json
-      })
-      .catch(err => err);
-    }
+      // Llama a la función fetchData para realizar la solicitud
+      return fetchData()
+        .then((data) => {
+          // La promesa se resolvió exitosamente, puedes usar los datos aquí
+          console.log("Datos recibidos:", data);
+        })
+        .catch((error) => {
+          // La promesa fue rechazada, maneja el error aquí
+          console.error("Error al obtener datos:", error);
+        });
+    },
   },
 });

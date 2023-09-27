@@ -1,7 +1,8 @@
 <template>
     <navbar/>
-    {{ data }}
+    <div v-if="data.data[position]">
       <div class="container  mt-4">
+        
         <div class="row">
           <tableToManageMap :data="data" :position="counter" />
           <div class=" col-lg-7 ms-lg-3 col-ms-12">
@@ -13,7 +14,7 @@
           </div>
         </div>
       </div>
-
+  </div>
 </template>
 
 <script setup>
@@ -26,9 +27,8 @@ import tableToManageMap from '../components/TableToManageMap.vue'
 
 const dataStore = useDataGraph()
 
-const data = ref(dataStore.getMap())
 
-const currentInfo = ref('')
+const currentInfo = ref()
 
 const counter = ref(0);
 
@@ -82,6 +82,7 @@ onUpdated(()=>{
 })
 
 onMounted(() => {
+  const data = ref(dataStore.getMap())
 
   currentInfo.value = data.value[counter.value]
   codeUpdateMap()

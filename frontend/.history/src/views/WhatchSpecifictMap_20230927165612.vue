@@ -26,7 +26,7 @@ import tableToManageMap from '../components/TableToManageMap.vue'
 
 const dataStore = useDataGraph()
 
-const data = ref(dataStore.getMap())
+const data = ref(dataStore.getData())
 
 const currentInfo = ref('')
 

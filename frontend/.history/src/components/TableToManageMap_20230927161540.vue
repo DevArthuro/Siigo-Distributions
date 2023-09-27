@@ -1,5 +1,5 @@
 <template>
-
+    <div v-if="data.data[position]">
       <div class="col-lg-4 col-ms-12">
           <p class="h4 text-center">Configuración del Mapa</p>
           <hr>
@@ -42,7 +42,7 @@
             </div>
           </form>
         </div>
-
+      </div>
 </template>
 
 <script setup>
