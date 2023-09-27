@@ -1,10 +1,8 @@
 <template>
     <navbar/>
-    <div class="container mt-5">
-        <div class="row">
-            <CardCreateMap/>
-            <CardWatchMap/>
-        </div>
+    <div class="container row">
+        <CardCreateMap/>
+        <CardWatchMap/>
     </div>
 </template>
 
