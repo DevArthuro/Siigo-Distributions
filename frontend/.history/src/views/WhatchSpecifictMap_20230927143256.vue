@@ -1,6 +1,6 @@
 <template>
     <navbar/>
-    <div class="container  mt-4">
+    <div v-if="showInfo" class="container  mt-4">
       
       <div class="row">
         <tableToManageMap :data="data" :position="counter" />
@@ -31,13 +31,14 @@ const currentInfo = ref()
 
 const counter = ref(0);
 
+const showInfo = ref(false)
 
 // Modifica la función decrease para que llame a showMapComputed
 const increase = () => {
   
   if (counter.value < data.length-1)
   {
-    
+    codeUpdateMap();
     counter.value++
   }
 
@@ -47,7 +48,7 @@ const decrease = () => {
   
   if (counter.value > 0)
   {
-    
+    codeUpdateMap();
     counter.value--;
   }
 
@@ -77,7 +78,7 @@ const codeUpdateMap = () => {
 }
 
 onUpdated(()=>{
-  codeUpdateMap();
+  
 })
 
 onMounted(() => {

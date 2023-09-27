@@ -31,13 +31,12 @@ const currentInfo = ref()
 
 const counter = ref(0);
 
-
 // Modifica la función decrease para que llame a showMapComputed
 const increase = () => {
   
   if (counter.value < data.length-1)
   {
-    
+    codeUpdateMap();
     counter.value++
   }
 
@@ -47,7 +46,7 @@ const decrease = () => {
   
   if (counter.value > 0)
   {
-    
+    codeUpdateMap();
     counter.value--;
   }
 
@@ -77,11 +76,11 @@ const codeUpdateMap = () => {
 }
 
 onUpdated(()=>{
-  codeUpdateMap();
+  
 })
 
 onMounted(() => {
-  currentInfo.value = data[counter.value]
+  currentInfo.value = dataStore.getMap()
   codeUpdateMap()
 });
 </script>../../frontend/node_modules/vue-router../../frontend/node_modules/sigma

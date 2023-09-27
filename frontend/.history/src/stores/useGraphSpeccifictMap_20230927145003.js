@@ -235,7 +235,7 @@ export const useDataGraph = defineStore('GraphData', {
                       'Authorization': 'Token 16ad0f125be5a1d75c64d94746f12528440e845a'
                     }
                   }
-                  const response = await axios.get(this.url, config)
+                  const response = await axios.get(this.url)
                   
                   console.log(response.data)
                   return response.data

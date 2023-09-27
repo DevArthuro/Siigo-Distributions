@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { readonly } from 'vue';
 
 export const useDataGraph = defineStore('GraphData', {
     state: () => ({
-      url: 'http://172.18.100.67:8000/map-routes/'
+      url: '172.18.100.67:8000'
     }),
 
     actions: {
@@ -225,19 +226,13 @@ export const useDataGraph = defineStore('GraphData', {
               },
               
             ];
-            
+
             const data = async () => {
               try
               {
-                  const config = {
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'Authorization': 'Token 16ad0f125be5a1d75c64d94746f12528440e845a'
-                    }
-                  }
-                  const response = await axios.get(this.url, config)
                   
-                  console.log(response.data)
+                  const url = this.url + '/map-routes'
+                  const response = await axios.get(url)
                   return response.data
               }
               catch (error)
@@ -246,7 +241,7 @@ export const useDataGraph = defineStore('GraphData', {
               }
             }
 
-            return data
+            return data();
         }
     }
 

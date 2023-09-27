@@ -40,6 +40,7 @@
             <input type="submit" value="Publicar nueva conexión" class="btn btn-success">
           </div>
         </form>
+        {{ data.position }}
       </div>
 </template>
 

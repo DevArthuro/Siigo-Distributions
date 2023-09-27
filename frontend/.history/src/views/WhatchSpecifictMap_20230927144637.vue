@@ -1,6 +1,6 @@
 <template>
     <navbar/>
-    <div class="container  mt-4">
+    <divclass="container  mt-4">
       
       <div class="row">
         <tableToManageMap :data="data" :position="counter" />
@@ -12,7 +12,7 @@
             </div>
         </div>
       </div>
-    </div>
+    </divclass=>
 </template>
 
 <script setup>
@@ -37,7 +37,7 @@ const increase = () => {
   
   if (counter.value < data.length-1)
   {
-    
+    codeUpdateMap();
     counter.value++
   }
 
@@ -47,7 +47,7 @@ const decrease = () => {
   
   if (counter.value > 0)
   {
-    
+    codeUpdateMap();
     counter.value--;
   }
 
@@ -77,7 +77,7 @@ const codeUpdateMap = () => {
 }
 
 onUpdated(()=>{
-  codeUpdateMap();
+  
 })
 
 onMounted(() => {

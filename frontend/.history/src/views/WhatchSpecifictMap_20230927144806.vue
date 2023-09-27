@@ -77,7 +77,7 @@ const codeUpdateMap = () => {
 }
 
 onUpdated(()=>{
-  codeUpdateMap();
+  
 })
 
 onMounted(() => {

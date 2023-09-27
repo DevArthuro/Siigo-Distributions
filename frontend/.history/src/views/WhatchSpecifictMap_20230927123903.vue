@@ -7,8 +7,9 @@
         <div class=" col-lg-7 ms-lg-3 col-ms-12">
             <div id="sigma-container" class="sigma-container" style="height: 75vh; padding: 0; margin: 0 magin-top: 10px;"></div>
             <div class="d-flex justify-content-between mt-4">
-              <button class="h4 btn btn-warning m-auto" @click="decrease">Anterior</button>
+              <button class="h4 btn btn-warning m-auto" @click="counter--">Anterior</button>
               <button class="h4 btn btn-warning m-auto" @click="increase">Siguiente</button>
+              {{ counter }}
             </div>
         </div>
       </div>
@@ -31,45 +32,36 @@ const currentInfo = ref()
 
 const counter = ref(0);
 
-
 // Modifica la función decrease para que llame a showMapComputed
 const increase = () => {
   
-  if (counter.value < data.length-1)
+  if (counter.value < data.length)
   {
     
+    console.log(counter.value)
+    console.log(data.length)
     counter.value++
   }
-
-}
-
-const decrease = () => {
-  
-  if (counter.value > 0)
-  {
-    
-    counter.value--;
+  else{
+    console.log("No puede aumentar")
   }
-
 }
 
 
 const codeUpdateMap = () => {
-  currentInfo.value = data[counter.value];
   const container = document.getElementById("sigma-container");
   const graph = new Graph();
-
-  container.innerHTML = '';
+  console.log(currentInfo.value)
   // Agrega nodos
   for (let item of currentInfo.value.locations)
   {
-    graph.addNode(item.id, { x: item.position_x, y: item.position_y, size: 5, label: item.label, color: "blue" });
+    graph.addNode(item.id, { x: item.x, y: item.y, size: 5, label: item.label, color: "blue" });
   }
   
   // Agrega ejes
   for (let item of currentInfo.value.connections)
   {
-    graph.addEdge(item.first_location, item.second_location, {color: "black"});
+    graph.addEdge(item.start, item.end, {color: "black"});
   }
 
   // Initialize Sigma.js after the container is available
@@ -77,11 +69,13 @@ const codeUpdateMap = () => {
 }
 
 onUpdated(()=>{
-  codeUpdateMap();
+  
 })
 
 onMounted(() => {
+  console.log(currentInfo.value)
   currentInfo.value = data[counter.value]
+  console.log(currentInfo.value)
   codeUpdateMap()
 });
 </script>../../frontend/node_modules/vue-router../../frontend/node_modules/sigma

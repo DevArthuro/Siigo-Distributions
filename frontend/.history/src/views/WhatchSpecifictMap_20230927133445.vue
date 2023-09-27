@@ -31,45 +31,46 @@ const currentInfo = ref()
 
 const counter = ref(0);
 
-
 // Modifica la función decrease para que llame a showMapComputed
 const increase = () => {
   
   if (counter.value < data.length-1)
   {
-    
     counter.value++
   }
-
+  else{
+    console.log("No puede aumentar")
+  }
 }
 
 const decrease = () => {
   
   if (counter.value > 0)
   {
-    
+    console.log(counter.value)
     counter.value--;
   }
-
+  else
+  {
+    console.log("No puede decrementar")
+  }
 }
 
 
 const codeUpdateMap = () => {
-  currentInfo.value = data[counter.value];
   const container = document.getElementById("sigma-container");
   const graph = new Graph();
-
-  container.innerHTML = '';
+  console.log(currentInfo.value)
   // Agrega nodos
   for (let item of currentInfo.value.locations)
   {
-    graph.addNode(item.id, { x: item.position_x, y: item.position_y, size: 5, label: item.label, color: "blue" });
+    graph.addNode(item.id, { x: item.x, y: item.y, size: 5, label: item.label, color: "blue" });
   }
   
   // Agrega ejes
   for (let item of currentInfo.value.connections)
   {
-    graph.addEdge(item.first_location, item.second_location, {color: "black"});
+    graph.addEdge(item.start, item.end, {color: "black"});
   }
 
   // Initialize Sigma.js after the container is available
@@ -77,11 +78,13 @@ const codeUpdateMap = () => {
 }
 
 onUpdated(()=>{
-  codeUpdateMap();
+  
 })
 
 onMounted(() => {
+  console.log(currentInfo.value)
   currentInfo.value = data[counter.value]
+  console.log(currentInfo.value)
   codeUpdateMap()
 });
 </script>../../frontend/node_modules/vue-router../../frontend/node_modules/sigma

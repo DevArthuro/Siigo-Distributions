@@ -231,11 +231,10 @@ export const useDataGraph = defineStore('GraphData', {
               {
                   const config = {
                     headers: {
-                      'Content-Type': 'application/json',
-                      'Authorization': 'Token 16ad0f125be5a1d75c64d94746f12528440e845a'
+                      'Content-Type': 'application/json'
                     }
                   }
-                  const response = await axios.get(this.url, config)
+                  const response = await axios.get(this.url)
                   
                   console.log(response.data)
                   return response.data
@@ -246,7 +245,7 @@ export const useDataGraph = defineStore('GraphData', {
               }
             }
 
-            return data
+            return data();
         }
     }
 

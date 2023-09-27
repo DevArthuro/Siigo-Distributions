@@ -37,7 +37,7 @@ const increase = () => {
   
   if (counter.value < data.length-1)
   {
-    
+    codeUpdateMap();
     counter.value++
   }
 
@@ -47,7 +47,7 @@ const decrease = () => {
   
   if (counter.value > 0)
   {
-    
+    codeUpdateMap();
     counter.value--;
   }
 
@@ -77,7 +77,7 @@ const codeUpdateMap = () => {
 }
 
 onUpdated(()=>{
-  codeUpdateMap();
+  
 })
 
 onMounted(() => {

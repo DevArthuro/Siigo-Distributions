@@ -1,15 +1,14 @@
 import { defineStore } from 'pinia'
-import axios from 'axios'
 
 export const useDataGraph = defineStore('GraphData', {
     state: () => ({
-      url: 'http://172.18.100.67:8000/map-routes/'
+
     }),
 
     actions: {
         getMap(slug)
         {
-            const data_quemada = [
+            const data = [
               {
               id: '',
               name: "cartagena",
@@ -225,28 +224,8 @@ export const useDataGraph = defineStore('GraphData', {
               },
               
             ];
-            
-            const data = async () => {
-              try
-              {
-                  const config = {
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'Authorization': 'Token 16ad0f125be5a1d75c64d94746f12528440e845a'
-                    }
-                  }
-                  const response = await axios.get(this.url, config)
-                  
-                  console.log(response.data)
-                  return response.data
-              }
-              catch (error)
-              {
-                console.log(error)
-              }
-            }
 
-            return data
+            return data;
         }
     }
 

@@ -23,16 +23,17 @@
         <p class="h5 text-start">Configuración de conexiones</p>
         <form class="form" @submit.prevent=""> <!--form to select the new connection-->
           <div class="form-floating container mt-2">
+            {{ data.data }}
             <select class="form-select">
               <option value="default">---</option>
-              <option v-for="item in data.data[position].locations" :key="item.id" :value="item.id">{{ item.label }}</option>
+              <option v-for="item in data.data[0].locations" :key="item.id" :value="item.id">{{ item.label }}</option>
             </select>
             <label for="" class="form-label ms-2">Conexión De inicio</label>
           </div>  
           <div class="form-floating container mt-2">
             <select class="form-select">
               <option value="default">---</option>
-              <option v-for="item in data.data[position].locations" :key="item.id" :value="item.id">{{ item.label }}</option>
+              <option v-for="item in data.data[0].locations" :key="item.id" :value="item.id">{{ item.label }}</option>
             </select>
             <label for="" class="form-label ms-2">Conexión De Fin</label>
           </div> 

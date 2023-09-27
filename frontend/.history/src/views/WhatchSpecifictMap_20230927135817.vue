@@ -31,13 +31,12 @@ const currentInfo = ref()
 
 const counter = ref(0);
 
-
 // Modifica la función decrease para que llame a showMapComputed
 const increase = () => {
   
   if (counter.value < data.length-1)
   {
-    
+    codeUpdateMap();
     counter.value++
   }
 
@@ -47,7 +46,7 @@ const decrease = () => {
   
   if (counter.value > 0)
   {
-    
+    codeUpdateMap();
     counter.value--;
   }
 
@@ -69,7 +68,7 @@ const codeUpdateMap = () => {
   // Agrega ejes
   for (let item of currentInfo.value.connections)
   {
-    graph.addEdge(item.first_location, item.second_location, {color: "black"});
+    graph.addEdge(item.start, item.end, {color: "black"});
   }
 
   // Initialize Sigma.js after the container is available
@@ -77,7 +76,7 @@ const codeUpdateMap = () => {
 }
 
 onUpdated(()=>{
-  codeUpdateMap();
+  
 })
 
 onMounted(() => {
