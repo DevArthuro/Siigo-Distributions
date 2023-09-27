@@ -19,7 +19,9 @@ class BaseModel(models.Model):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
         related_name='created_by_%(class)s_related', 
-        on_delete=models.CASCADE)
+        on_delete=models.CASCADE,
+        null=True
+    )
 
     updated_at = models.DateTimeField(
         auto_now=True

@@ -13,10 +13,11 @@ SECRET_KEY = 'django-insecure-!ff8_dfemb2z_d@gp2&73*d*38!ng3ofu#&nr*@n+vl5kt&5l8
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
-# Application definition
+AUTH_USER_MODEL = 'users.User'
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -36,7 +37,17 @@ INSTALLED_APPS = [
     'locations',
     'connections',
     'map_routes',
+    'users',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -100,6 +111,22 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+
+CORS_ALLOWED_ORIGINS = [
+    'http://172.18.100.86:5173',
 ]
 
 

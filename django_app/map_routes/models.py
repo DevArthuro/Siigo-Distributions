@@ -2,8 +2,6 @@ from django.db import models
 from utils.models import BaseModel
 from uuid import uuid4
 from django.template.defaultfilters import slugify
-from locations.models import Location
-from connections.models import Connection
 
 
 class MapRoute(BaseModel):
@@ -12,7 +10,8 @@ class MapRoute(BaseModel):
         max_length=120,
         unique=False,
         null=False,
-        blank=False
+        blank=False,
+        default=uuid4
     )
 
     slug = models.SlugField(
@@ -22,27 +21,24 @@ class MapRoute(BaseModel):
         db_index=True
     )
 
-    starts_at = models.ForeignKey(
+    """starts_at = models.ForeignKey(
         Location,
         related_name='connections_starts_at',
-        on_delete=models.CASCADE
-    )
+        on_delete=models.CASCADE,
+        null=True
+    )"""
 
-    ends_at = models.ForeignKey(
-        Location,
-        related_name='connections_ends_at',
-        on_delete=models.CASCADE
-    )
-
-    connections = models.ManyToManyField(
+    """connections = models.ManyToManyField(
         Connection,
-        related_name='map_route'
+        related_name='map_route',
+        null=True
     )
 
     locations = models.ManyToManyField(
         Location,
-        related_name='map_route'
-    )
+        related_name='map_route',
+        null=True
+    )"""
 
     def __str__(self):
         return self.slug
@@ -51,4 +47,11 @@ class MapRoute(BaseModel):
         name_slug = slugify(f'{self.name}-{str(uuid4().hex[:10])}')
         self.slug = name_slug
         return super().save(*args, **kwargs)
+    
+    @classmethod
+    def get_default_pk(cls):
+        map_route, created = cls.objects.get_or_create(
+            name='default map_route'
+        )
+        return map_route.pk
     
