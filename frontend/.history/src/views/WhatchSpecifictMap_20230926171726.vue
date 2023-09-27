@@ -11,7 +11,7 @@ import {onMounted } from 'vue'
 import Graph from "graphology";
 import Sigma from "sigma";
 import { useDataGraph } from '../stores/useGraphSpeccifictMap'
-import uploadToJson from '../components/CreateNewMap.vue'
+
 
 const dataStore = useDataGraph()
 
@@ -43,6 +43,6 @@ onMounted(() => {
   background-image: url('/mapa.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  border-radius: 30px;
+  
 }
 </style>

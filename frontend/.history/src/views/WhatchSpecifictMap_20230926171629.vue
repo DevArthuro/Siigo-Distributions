@@ -1,7 +1,7 @@
 <template>
     <navbar/>
-    <div class="container mt-4 ">
-        <div id="sigma-container" class="sigma-container" style="height: 80vh; padding: 0; margin: 0"></div>
+    <div class="container mt-4 border border-1 border-dark rounded">
+        <div id="sigma-container" class="sigma-container" style="height: 80vh;"></div>
     </div>
 </template>
 
@@ -11,7 +11,7 @@ import {onMounted } from 'vue'
 import Graph from "graphology";
 import Sigma from "sigma";
 import { useDataGraph } from '../stores/useGraphSpeccifictMap'
-import uploadToJson from '../components/CreateNewMap.vue'
+
 
 const dataStore = useDataGraph()
 
@@ -24,7 +24,7 @@ onMounted(() => {
   // Agrega nodos
   for (let item of data.locations)
   {
-    graph.addNode(item.id, { x: item.x, y: item.y, size: 5, label: item.label, color: "blue" });
+    graph.addNode(item.id, { x: item.x, y: item.y, size: 5, label: item.label, color: "black" });
   }
   
   // Agrega ejes
@@ -43,6 +43,6 @@ onMounted(() => {
   background-image: url('/mapa.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  border-radius: 30px;
+  
 }
 </style>
