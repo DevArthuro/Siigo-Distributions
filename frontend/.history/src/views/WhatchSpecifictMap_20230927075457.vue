@@ -39,7 +39,7 @@
               </select>
               <label for="" class="form-label ms-2">Conexión De Fin</label>
             </div> 
-            <div class="text-end mt-2 mb-3 pe-3">
+            <div class="text-end mt-2 pe-3">
               <input type="submit" value="Publicar nueva conexión" class="btn btn-success">
             </div>
           </form>

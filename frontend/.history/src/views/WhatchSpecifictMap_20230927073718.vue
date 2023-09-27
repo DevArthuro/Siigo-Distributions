@@ -2,50 +2,31 @@
     <navbar/>
     <div class="container  mt-4">
       <div class="row">
-        <div class="col-lg-4 col-ms-12">
+        <div class="col-4">
           <p class="h4 text-center">Configuración del Mapa</p>
           <hr>
           <p class="h5 text-start">Configuración de ubicaciones</p>
-          <form class="form" @submit.prevent=""> <!--form to register new location-->
-            <div class="form-floating mt-2">
+          <form class="form" @submit.prevent="">
+            <div class="form-floating mt-3">
               <input type="text" class="form-control" placeholder="">
               <label for="" class="form-label">Nombre de la ubicación</label>
             </div>
-            <div class="form-floating mt-2">
+            <div class="form-floating mt-3">
               <input type="text" class="form-control" placeholder="">
               <label for="" class="form-label">Coordenada X</label>
             </div>
-            <div class="form-floating mt-2">
+            <div class="form-floating mt-3">
               <input type="text" class="form-control" placeholder="">
               <label for="" class="form-label">Coordenada Y</label>
             </div>
-            <div class="text-end mt-2 mb-3 pe-3">
-              <input type="submit" value="Publicar nueva ubicación" class="btn btn-success ">
+            <div class="text-end pe-3">
+
             </div>
-          </form>
-          <p class="h5 text-start">Configuración de conexiones</p>
-          <form class="form" @submit.prevent=""> <!--form to select the new connection-->
-            <div class="form-floating container mt-2">
-              <select class="form-select">
-                <option value="default">---</option>
-                <option v-for="item in data.locations" :key="item.id" :value="item.id">{{ item.label }}</option>
-              </select>
-              <label for="" class="form-label ms-2">Conexión De inicio</label>
-            </div>  
-            <div class="form-floating container mt-2">
-              <select class="form-select">
-                <option value="default">---</option>
-                <option v-for="item in data.locations" :key="item.id" :value="item.id">{{ item.label }}</option>
-              </select>
-              <label for="" class="form-label ms-2">Conexión De Fin</label>
-            </div> 
-            <div class="text-end mt-2 mb-3 pe-3">
-              <input type="submit" value="Publicar nueva conexión" class="btn btn-success">
-            </div>
+            <input type="submit" value="Publicar nueva ubicación" class="btn btn-success">
           </form>
         </div>
-        <div class=" col-lg-7 ms-lg-3 col-ms-12">
-            <div id="sigma-container" class="sigma-container" style="height: 80vh; padding: 0; margin: 0 magin-top: 10px;"></div>
+        <div class=" col-7 ms-3">
+            <div id="sigma-container" class="sigma-container" style="height: 80vh; padding: 0; margin: 0"></div>
         </div>
       </div>
     </div>
@@ -83,7 +64,7 @@ const codeUpdateMap = () => {
 }
 
 onUpdated(()=>{
-  
+  codeUpdateMap()
 })
 
 onMounted(() => {

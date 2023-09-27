@@ -2,7 +2,7 @@
     <navbar/>
     <div class="container  mt-4">
       <div class="row">
-        <div class="col-lg-4 col-ms-12">
+        <div class="col-4">
           <p class="h4 text-center">Configuración del Mapa</p>
           <hr>
           <p class="h5 text-start">Configuración de ubicaciones</p>
@@ -28,24 +28,22 @@
             <div class="form-floating container mt-2">
               <select class="form-select">
                 <option value="default">---</option>
-                <option v-for="item in data.locations" :key="item.id" :value="item.id">{{ item.label }}</option>
               </select>
               <label for="" class="form-label ms-2">Conexión De inicio</label>
             </div>  
             <div class="form-floating container mt-2">
               <select class="form-select">
                 <option value="default">---</option>
-                <option v-for="item in data.locations" :key="item.id" :value="item.id">{{ item.label }}</option>
               </select>
               <label for="" class="form-label ms-2">Conexión De Fin</label>
             </div> 
-            <div class="text-end mt-2 mb-3 pe-3">
+            <div class="text-end mt-2 pe-3">
               <input type="submit" value="Publicar nueva conexión" class="btn btn-success">
             </div>
           </form>
         </div>
-        <div class=" col-lg-7 ms-lg-3 col-ms-12">
-            <div id="sigma-container" class="sigma-container" style="height: 80vh; padding: 0; margin: 0 magin-top: 10px;"></div>
+        <div class=" col-7 ms-3">
+            <div id="sigma-container" class="sigma-container" style="height: 80vh; padding: 0; margin: 0"></div>
         </div>
       </div>
     </div>
