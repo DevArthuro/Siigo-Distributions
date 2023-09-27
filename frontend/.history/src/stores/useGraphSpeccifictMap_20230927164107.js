@@ -231,10 +231,7 @@ export const useDataGraph = defineStore("GraphData", {
         }
       })
       .then(response => response.json())
-      .then(json => {
-        console.log(json);
-        return json
-      })
+      .then(json => json)
       .catch(err => err);
     }
   },

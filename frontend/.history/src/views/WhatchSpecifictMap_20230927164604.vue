@@ -26,9 +26,7 @@ import tableToManageMap from '../components/TableToManageMap.vue'
 
 const dataStore = useDataGraph()
 
-const data = ref(dataStore.getMap())
-
-const currentInfo = ref('')
+const currentInfo = ref()
 
 const counter = ref(0);
 
@@ -82,6 +80,7 @@ onUpdated(()=>{
 })
 
 onMounted(() => {
+  const data = ref(dataStore.getMap())
 
   currentInfo.value = data.value[counter.value]
   codeUpdateMap()

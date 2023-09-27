@@ -26,9 +26,11 @@ import tableToManageMap from '../components/TableToManageMap.vue'
 
 const dataStore = useDataGraph()
 
+const currentInfo = ref()
+
 const data = ref(dataStore.getMap())
 
-const currentInfo = ref('')
+  currentInfo.value = data.value[counter.value]
 
 const counter = ref(0);
 
@@ -82,8 +84,7 @@ onUpdated(()=>{
 })
 
 onMounted(() => {
-
-  currentInfo.value = data.value[counter.value]
+  
   codeUpdateMap()
 });
 </script>../../frontend/node_modules/vue-router../../frontend/node_modules/sigma

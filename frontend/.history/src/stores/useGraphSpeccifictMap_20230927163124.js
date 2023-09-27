@@ -7,7 +7,7 @@ export const useDataGraph = defineStore("GraphData", {
   }),
 
   actions: {
-    getData(slug) {
+    getMap(slug) {
       const data = [
         {
           id: "",
@@ -220,22 +220,5 @@ export const useDataGraph = defineStore("GraphData", {
 
       return data;
     },
-
-    getMap ()
-    {
-      fetch(this.url, {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json;',
-          'Authorization': 'Token 8a0af303301ae408ec1d7d496d3f1f8c7743ee0e'
-        }
-      })
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
-        return json
-      })
-      .catch(err => err);
-    }
   },
 });

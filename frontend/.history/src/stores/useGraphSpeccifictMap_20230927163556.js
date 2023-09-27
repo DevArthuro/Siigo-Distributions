@@ -221,21 +221,17 @@ export const useDataGraph = defineStore("GraphData", {
       return data;
     },
 
-    getMap ()
+    async getMap ()
     {
-      fetch(this.url, {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json;',
-          'Authorization': 'Token 8a0af303301ae408ec1d7d496d3f1f8c7743ee0e'
+        try 
+        {
+          const data = await fetch(this.url)
+          const response = response.json();
         }
-      })
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
-        return json
-      })
-      .catch(err => err);
+        catch (error)
+        {
+          console.log(error);
+        }
     }
   },
 });
