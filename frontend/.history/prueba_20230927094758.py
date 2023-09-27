@@ -105,15 +105,17 @@ def build_graph():
     edge = Edges()
 
     edges = [
-        ('a', 'b', 2, True),
-        ('b', 'c', 3, True),
-        ('c', 'd', 9, True),
-        ('d', 'e', 1, True),
-        ('c', 'a', 4, True),
-        ('a', 'd', 4, True),
-        ('c', 'e', 9, True),
+        ('y', 'a', 2, True),
+        ('y', 'x', 2, True),
+        ('x', 'q', 5, True), 
+        ('a', 'k', 8, True),
+        ('q', 's', 10, True),
+        ('a', 'g', 10, True),
+        ('g', 'z', 3, True),
+        ('g', 'c', 7, True),
+        ('k', 's', 1, True),
     ]
-    for index, element in enumerate(('a', 'b', 'c', 'd', 'e')):
+    for index, element in enumerate(('a', 'y', 'x', 'q', 's', 'k', 'g', 'z', 'c')):
         g.add_vertex(element, index)
 
     for v1, v2, peso, boolean in edges:
@@ -123,15 +125,13 @@ def build_graph():
     for key, value in edge.get_edges().items():
         print(key, [i.id for i in value])
     
-    
+    for key, value in g.graph_dict.items():
+        print(value.padre, value.distancia)
+
     g.dijktra(g.get_vertex('a'))
-    
+    print(g.camino(g.get_vertex('a'), g.get_vertex('x')))
     print("\nLos valores de la gráfica son los siguientes: ")
     g.imprimir_gráfica()
-
-    for key, value in g.graph_dict.items():
-        print(key ,value.padre, value.distancia)
-
 
 if __name__ == "__main__":
     build_graph()

@@ -33,21 +33,20 @@ const currentInfo = ref()
 
 const counter = ref(0);
 
-// Modifica la función decrease para que llame a showMapComputed
 const decrease = computed(() => {
-  if (counter.value > -1) {
+  if (counter.value > -1)
+  {
+    showMapComputed()
     counter.value--;
-    showMapComputed();
   }
-});
+    
+})
 
-// Modifica la función increase para que llame a showMapComputed
 const increase = computed(() => {
   counter.value++;
-  showMapComputed();
-  console.log(counter.value);
-});
-
+  showMapComputed()
+  console.log(counter.value)
+})
 
 const showMapComputed = computed(() => {
     currentInfo.value = data[counter.value]

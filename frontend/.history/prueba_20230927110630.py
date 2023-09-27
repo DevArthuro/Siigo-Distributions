@@ -105,15 +105,15 @@ def build_graph():
     edge = Edges()
 
     edges = [
-        ('a', 'b', 2, True),
-        ('b', 'c', 3, True),
-        ('c', 'd', 9, True),
-        ('d', 'e', 1, True),
-        ('c', 'a', 4, True),
-        ('a', 'd', 4, True),
+        ('a', 'b', 1, True),
+        ('b', 'c', 1, True),
+        ('c', 'd', 1, True),
+        ('d', 'e', 2, True),
+        ('e', 'a', 8, True),
+        ('a', 'c', 4, True),
         ('c', 'e', 9, True),
     ]
-    for index, element in enumerate(('a', 'b', 'c', 'd', 'e')):
+    for index, element in enumerate((i for i in range(1, 26))):
         g.add_vertex(element, index)
 
     for v1, v2, peso, boolean in edges:
@@ -124,7 +124,7 @@ def build_graph():
         print(key, [i.id for i in value])
     
     
-    g.dijktra(g.get_vertex('a'))
+    g.dijktra(g.get_vertex('c'))
     
     print("\nLos valores de la gráfica son los siguientes: ")
     g.imprimir_gráfica()

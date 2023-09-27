@@ -22,7 +22,7 @@
         </form>
         <p class="h5 text-start">Configuración de conexiones</p>
         <form class="form" @submit.prevent=""> <!--form to select the new connection-->
-          <div class="form-floating container mt-2">
+          <div class=" container mt-2">
             {{ data.data }}
             <select class="form-select">
               <option value="default">---</option>

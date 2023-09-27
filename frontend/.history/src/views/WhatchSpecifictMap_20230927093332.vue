@@ -48,6 +48,19 @@ const increase = computed(() => {
   console.log(counter.value);
 });
 
+// ...
+</script>
+Con estas modificaciones, cada vez que se haga clic en "Anterior" o "Siguiente", se actualizará la información del mapa de acuerdo con el valor actual de counter.
+
+Además, en la función showMapComputed, debes asegurarte de que estás utilizando el nuevo valor de currentInfo para actualizar el mapa. El código actual ya parece estar configurado correctamente para eso.
+
+Con estas modificaciones, deberías poder cambiar de mapa al hacer clic en los botones "Anterior" y "Siguiente". Asegúrate de que tus datos de mapa estén correctamente configurados en useDataGraph y que la información de los mapas esté estructurada de manera adecuada.
+
+
+
+
+
+
 
 const showMapComputed = computed(() => {
     currentInfo.value = data[counter.value]

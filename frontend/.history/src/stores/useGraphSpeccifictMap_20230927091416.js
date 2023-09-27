@@ -10,8 +10,8 @@ export const useDataGraph = defineStore('GraphData', {
         {
             const data = [
               {
-              name: "cartagena",
-              locations: [
+              cartagena: {
+                locations: [
                   {
                     id: 1,
                     label: "Valencia",
@@ -50,7 +50,7 @@ export const useDataGraph = defineStore('GraphData', {
                   },
                   
                 ],
-              connections: [
+                connections: [
                   {
                     id: 1,
                     start: 1,
@@ -77,10 +77,11 @@ export const useDataGraph = defineStore('GraphData', {
                   },
                   
                 ]
+              }
               },
               {
-                name: "Libia",
-                locations: [
+                Monteria: {
+                  locations: [
                     {
                       id: 1,
                       label: "Valencia",
@@ -119,7 +120,7 @@ export const useDataGraph = defineStore('GraphData', {
                     },
                     
                   ],
-                connections: [
+                  connections: [
                     {
                       id: 1,
                       start: 1,
@@ -146,7 +147,8 @@ export const useDataGraph = defineStore('GraphData', {
                     },
                     
                   ]
-              }
+                }
+                }
             ];
 
             return data;

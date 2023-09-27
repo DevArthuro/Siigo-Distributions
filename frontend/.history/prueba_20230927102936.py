@@ -105,13 +105,8 @@ def build_graph():
     edge = Edges()
 
     edges = [
-        ('a', 'b', 2, True),
-        ('b', 'c', 3, True),
-        ('c', 'd', 9, True),
-        ('d', 'e', 1, True),
-        ('c', 'a', 4, True),
-        ('a', 'd', 4, True),
-        ('c', 'e', 9, True),
+        ('', '', 2, True),
+        ()
     ]
     for index, element in enumerate(('a', 'b', 'c', 'd', 'e')):
         g.add_vertex(element, index)

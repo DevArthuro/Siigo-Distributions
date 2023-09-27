@@ -124,7 +124,7 @@ def build_graph():
         print(key, [i.id for i in value])
     
     
-    g.dijktra(g.get_vertex('a'))
+    g.dijktra(g.get_vertex(''))
     
     print("\nLos valores de la gráfica son los siguientes: ")
     g.imprimir_gráfica()

@@ -10,7 +10,7 @@ export const useDataGraph = defineStore('GraphData', {
         {
             const data = [
               {
-              name: "cartagena",
+              name: cartagena,
               locations: [
                   {
                     id: 1,
@@ -79,7 +79,7 @@ export const useDataGraph = defineStore('GraphData', {
                 ]
               },
               {
-                name: "Libia",
+                name: Libia,
                 locations: [
                     {
                       id: 1,

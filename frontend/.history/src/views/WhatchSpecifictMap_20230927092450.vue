@@ -33,21 +33,18 @@ const currentInfo = ref()
 
 const counter = ref(0);
 
-// Modifica la función decrease para que llame a showMapComputed
 const decrease = computed(() => {
-  if (counter.value > -1) {
+  if (counter.value > -1)
+  {
     counter.value--;
-    showMapComputed();
   }
-});
+    
+})
 
-// Modifica la función increase para que llame a showMapComputed
 const increase = computed(() => {
   counter.value++;
-  showMapComputed();
-  console.log(counter.value);
-});
-
+  console.log(counter.value)
+})
 
 const showMapComputed = computed(() => {
     currentInfo.value = data[counter.value]
@@ -56,7 +53,7 @@ const showMapComputed = computed(() => {
 const codeUpdateMap = () => {
   const container = document.getElementById("sigma-container");
   const graph = new Graph();
-  console.log(currentInfo.value)
+
   // Agrega nodos
   for (let item of currentInfo.value.locations)
   {
@@ -64,7 +61,7 @@ const codeUpdateMap = () => {
   }
   
   // Agrega ejes
-  for (let item of currentInfo.value.connections)
+  for (let item of currentInfo.value.locations)
   {
     graph.addEdge(item.start, item.end, {color: "black"});
   }
