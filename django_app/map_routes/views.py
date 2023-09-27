@@ -8,39 +8,62 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import Scenario
+from .models import MapRoute
+from locations.models import Location
 from connections.models import Connection
 from locations.models import Location
-from .serializers import ScenarioSerializer
+from .serializers import MapRouteSerializer
 from utils.views import build_graph, Vertex
 
 
-class ScenariosList(APIView):
+class MapRouteList(APIView):
     def get(self, request, format=None):
-        scenarios = Scenario.objects.all()
-        serializer = ScenarioSerializer(
-            scenarios, many=True
+        map_routes = MapRoute.objects.all()
+        serializer = MapRouteSerializer(
+            map_routes, many=True
         )
         return Response(
             serializer.data,
             status=status.HTTP_200_OK
         )
+    
 
-class BestWay(APIView):
-
-    def get(self, request, scenario_slug, format=None):
-
-        scenario = get_object_or_404(
-            Scenario, 
-            slug=scenario_slug
+@api_view(['POST'])
+def create_route(request):
+    if request.data['ubicaciones'] is None:
+        return Response(
+            {'message':"Bad request"},
+            status=status.HTTP_400_BAD_REQUEST
         )
+    
+    for location in request.data['ubicaciones']:
+        try:
+            Location.objects.create(
+                label = location['nombre'],
+                position_x = location['posX'],
+                position_y = location['posY'],
+            )
+        except:
+            pass
+    
+
+class RouteDetail(APIView):
+
+    def get(self, request, map_route_slug, format=None):
+
+        map_route = get_object_or_404(
+            MapRoute, 
+            slug=map_route_slug
+        )
+
 
         edges = []
 
         connections = get_list_or_404(
             Connection, 
-            scenario=scenario.id
+            map_route=map_route.id
             )
+        
         for connection in connections:
             new_connection = tuple((
                 connection.first_location.id.hex, 
@@ -52,7 +75,7 @@ class BestWay(APIView):
 
         locations = get_list_or_404(
             Location,
-            scenario=scenario
+            map_route=map_route
             )
         
         vertexes = []
@@ -62,8 +85,8 @@ class BestWay(APIView):
             new_vertex = Vertex(location.id.hex, data)
             vertexes.append(new_vertex)
         
-        starts_at = scenario.starts_at.id.hex
-        ends_at = scenario.ends_at.id.hex
+        starts_at = map_route.starts_at.id.hex
+        ends_at = map_route.ends_at.id.hex
         
         try:
             build_graph(
