@@ -53,10 +53,6 @@ def get_or_create_map_route(map_route_name):
     return route_id
 
 
-def get_or_create_location():
-    pass
-
-
 @api_view(['POST'])
 def create_set(request):
 
@@ -183,54 +179,3 @@ def create_set(request):
         {'message':'Map route was successfully created'},
         status=status.HTTP_201_CREATED
     )
-    
-
-@api_view(['POST'])
-def get_most_optimal_path(self, request, map_route_slug, format=None):
-
-    map_route = get_object_or_404(
-        MapRoute, 
-        slug=map_route_slug
-    )
-
-    edges = []
-
-    connections = get_list_or_404(
-        Connection, 
-        map_route=map_route.id
-        )
-    
-    for connection in connections:
-        new_connection = tuple((
-            connection.first_location.id.hex, 
-            connection.second_location.id.hex,
-            connection.weight,
-            connection.bidirectional)
-        )
-        edges.append(new_connection)
-
-    locations = get_list_or_404(
-        Location,
-        map_route=map_route
-        )
-    
-    vertexes = []
-
-    for location in locations:
-        data = [location.position_x, location.position_y]
-        new_vertex = Vertex(location.id.hex, data)
-        vertexes.append(new_vertex)
-    
-    starts_at = map_route.starts_at.id.hex
-    
-    try:
-        build_graph(
-            edges, 
-            vertexes, 
-            starts_at
-        )
-    except:
-        pass
-
-    return Response({'message': 'Did it'})
-

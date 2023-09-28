@@ -1,6 +1,5 @@
 from django.db import models
 from utils.models import BaseModel
-from locations.models import Location
 from uuid import uuid4
 from django.template.defaultfilters import slugify
 
@@ -21,18 +20,6 @@ class MapRoute(BaseModel):
         max_length=100,
         db_index=True
     )
-
-    """connections = models.ManyToManyField(
-        Connection,
-        related_name='map_route',
-        null=True
-    )
-
-    locations = models.ManyToManyField(
-        Location,
-        related_name='map_route',
-        null=True
-    )"""
 
     def __str__(self):
         return self.slug
