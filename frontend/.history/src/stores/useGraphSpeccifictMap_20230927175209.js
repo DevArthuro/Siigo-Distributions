@@ -227,16 +227,6 @@ export const useDataGraph = defineStore("GraphData", {
         let count = this.data[position].locations.length;
         location_new.id = count+=1; 
         this.data[position].locations.push(location_new);
-    },
-
-    setEdge(position, edge_new)
-    {
-        let count = this.data[position].connections.length;
-        edge_new.id = count+=1;
-        console.log(edge_new.id)
-        console.log(this.data[position].connections)
-        console.log(edge_new)
-        this.data[position].locations.push(edge_new);
     }
   },
 });

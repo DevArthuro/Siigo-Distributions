@@ -1,9 +1,9 @@
 <template>
     <navbar/>
-    <!--{{ data }}-->
+    {{ data }}
       <div class="container  mt-4">
         <div class="row">
-          <tableToManageMap :data="data" :position="counter" @reload="reload"/>
+          <tableToManageMap :data="data" :position="counter" />
           <div class=" col-lg-7 ms-lg-3 col-ms-12">
               <div id="sigma-container" class="sigma-container" style="height: 75vh; padding: 0; margin: 0 magin-top: 10px;"></div>
               <div class="d-flex justify-content-between mt-4">
@@ -26,7 +26,7 @@ import tableToManageMap from '../components/TableToManageMap.vue'
 
 const dataStore = useDataGraph()
 
-const data = ref(dataStore.getData())
+
 
 const currentInfo = ref('')
 
@@ -53,9 +53,6 @@ const decrease = () => {
 
 }
 
-const reload = () => {
-  codeUpdateMap()
-}
 
 const codeUpdateMap = () => {
   currentInfo.value = data.value[counter.value];
@@ -72,7 +69,7 @@ const codeUpdateMap = () => {
   // Agrega ejes
   for (let item of currentInfo.value.connections)
   {
-    graph.addEdge(item.first_location, item.second_location, {id: item.id, color: "black"});
+    graph.addEdge(item.first_location, item.second_location, {color: "black"});
   }
 
   // Initialize Sigma.js after the container is available
@@ -85,7 +82,7 @@ onUpdated(()=>{
 })
 
 onMounted(() => {
-  
+  const data = ref(dataStore.getData())
   currentInfo.value = data.value[counter.value]
   codeUpdateMap()
 });

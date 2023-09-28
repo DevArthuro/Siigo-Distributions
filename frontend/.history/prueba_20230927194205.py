@@ -110,7 +110,7 @@ def build_graph():
         ('c', 'a', 7, False),
         ('c', 'e', 20, False),
         ('e', 'd', 10, True),
-        ('d', 'b', 4, True),
+        ('d', 'b', 4, False),
         ('d', 'f', 3, True),
     ]
     for index, element in enumerate(('a', 'b', 'c', 'd', 'e', 'f')):

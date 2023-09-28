@@ -232,10 +232,7 @@ export const useDataGraph = defineStore("GraphData", {
     setEdge(position, edge_new)
     {
         let count = this.data[position].connections.length;
-        edge_new.id = count+=1;
-        console.log(edge_new.id)
-        console.log(this.data[position].connections)
-        console.log(edge_new)
+        edge_new.id = count+=3;
         this.data[position].locations.push(edge_new);
     }
   },
