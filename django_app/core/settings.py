@@ -127,6 +127,7 @@ CORS_ALLOW_METHODS = (
 
 CORS_ALLOWED_ORIGINS = [
     'http://172.18.100.86:5173',
+    'http://localhost:5173',
 ]
 
 

@@ -7,7 +7,7 @@ from django.template.defaultfilters import slugify
 class MapRoute(BaseModel):
 
     name = models.CharField(
-        max_length=120,
+        max_length=120, 
         unique=False,
         null=False,
         blank=False,
@@ -20,13 +20,6 @@ class MapRoute(BaseModel):
         max_length=100,
         db_index=True
     )
-
-    """starts_at = models.ForeignKey(
-        Location,
-        related_name='connections_starts_at',
-        on_delete=models.CASCADE,
-        null=True
-    )"""
 
     """connections = models.ManyToManyField(
         Connection,
