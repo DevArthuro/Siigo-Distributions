@@ -79,9 +79,7 @@ export const useDataGraph = defineStore("GraphData", {
           }
         }
         const request = await axios.post(url, data, config)
-        const info = await request.data
-        console.log(info)
-        return info
+        const data = await request.data
       }
       catch(error)
       {

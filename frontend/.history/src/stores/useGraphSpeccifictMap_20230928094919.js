@@ -72,16 +72,7 @@ export const useDataGraph = defineStore("GraphData", {
           ends_at: second_position,
           map_route_slug: map
         }
-        const config = {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Token 8a0af303301ae408ec1d7d496d3f1f8c7743ee0e'
-          }
-        }
-        const request = await axios.post(url, data, config)
-        const info = await request.data
-        console.log(info)
-        return info
+        const request = axios.post(url, )
       }
       catch(error)
       {

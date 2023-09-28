@@ -69,10 +69,18 @@ const dataNewEdge = ref({
 })
 
 const setNewNode = () => {
+  console.log(data.data)
   const response = graph.setNewNodo(data.data[data.position].slug, dataNewNode.value.label, dataNewNode.value.position_x, dataNewNode.value.position_y)
   console.log(response)
-  emits('reload');
-
+  if (response[0] < 400)
+  {
+    alert(response[0])
+    emits('reload');
+  }
+  else
+  {
+    alert(response[1])
+  }
 }
 
 const setNewEdge = () => {

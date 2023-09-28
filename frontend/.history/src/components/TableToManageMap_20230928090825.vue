@@ -69,10 +69,17 @@ const dataNewEdge = ref({
 })
 
 const setNewNode = () => {
-  const response = graph.setNewNodo(data.data[data.position].slug, dataNewNode.value.label, dataNewNode.value.position_x, dataNewNode.value.position_y)
+  console.log(data.data)
+  const response = graph.setNewNodo(data.data.slug, dataNewNode.value.label, dataNewNode.value.position_x, dataNewNode.value.position_y)
   console.log(response)
-  emits('reload');
-
+  if (response)
+  {
+    emits('reload');
+  }
+  else
+  {
+    alert("No es un nodo válido")
+  }
 }
 
 const setNewEdge = () => {

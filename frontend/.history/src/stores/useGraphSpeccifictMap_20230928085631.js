@@ -4,8 +4,7 @@ import axios from "axios";
 export const useDataGraph = defineStore("GraphData", {
   state: () => ({
     url: "http://172.18.100.67:8000",
-    data: [],
-    message: ''
+    data: []
 
   }),
 
@@ -36,7 +35,7 @@ export const useDataGraph = defineStore("GraphData", {
     {
       try
       {
-        const url = this.url + `/locations/${map}/create/`
+        const url = this.url + `/locations/${map}`
         const data = {
             label: name,
             position_x: posX,
@@ -50,9 +49,9 @@ export const useDataGraph = defineStore("GraphData", {
           }
         }
         const request = await axios.post(url, data, config)
-        const response = await request.data
-        const message = [response.status, response.detail]
-        this.message = response.detail
+        
+        const message = request.statusText
+
         return message
 
       }
@@ -62,37 +61,17 @@ export const useDataGraph = defineStore("GraphData", {
       }
     },
 
-    async calculateAlgorithm(map, fist_position, second_position)
-    {
-      try
-      {
-        const url = this.url + "/optimal-way/"
-        const data = {
-          starts_at: fist_position,
-          ends_at: second_position,
-          map_route_slug: map
-        }
-        const config = {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Token 8a0af303301ae408ec1d7d496d3f1f8c7743ee0e'
-          }
-        }
-        const request = await axios.post(url, data, config)
-        const info = await request.data
-        console.log(info)
-        return info
-      }
-      catch(error)
-      {
-        console.log(error)
-      }
-    },
     getData(slug) {
       
       return this.data;
     },
 
+    setNewNodo(position, location_new)
+    {
+        let count = this.data[position].locations.length;
+        location_new.id = count+=1; 
+        this.data[position].locations.push(location_new);
+    },
 
     setEdge(position, edge_new)
     {
