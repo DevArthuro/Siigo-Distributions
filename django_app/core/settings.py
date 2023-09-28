@@ -97,6 +97,13 @@ DATABASES = {
     }
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'sporres09@gmail.com'
+EMAIL_HOST_PASSWORD = 'ocdrqjenpyeyoxig'
+EMAIL_USE_TLS = True
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -139,7 +146,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'SEND_ACTIVATION_EMAIL': True,
+    'ACTIVATION_URL': 'activate/{uid}/{token}'
+}
 
 STATIC_URL = 'static/'
 

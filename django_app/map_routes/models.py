@@ -1,5 +1,6 @@
 from django.db import models
 from utils.models import BaseModel
+from locations.models import Location
 from uuid import uuid4
 from django.template.defaultfilters import slugify
 
@@ -11,7 +12,7 @@ class MapRoute(BaseModel):
         unique=False,
         null=False,
         blank=False,
-        default=uuid4
+        default=uuid4()
     )
 
     slug = models.SlugField(
