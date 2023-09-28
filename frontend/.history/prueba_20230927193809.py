@@ -107,11 +107,11 @@ def build_graph():
     edges = [
         ('a', 'b', 5, False),
         ('b', 'c', 8, False),
-        ('c', 'a', 7, False),
-        ('c', 'e', 20, False),
-        ('e', 'd', 10, True),
-        ('d', 'b', 4, True),
-        ('d', 'f', 3, True),
+        ('c', 'd', 9, True),
+        ('d', 'e', 1, True),
+        ('c', 'a', 4, True),
+        ('a', 'd', 4, True),
+        ('c', 'e', 9, True),
     ]
     for index, element in enumerate(('a', 'b', 'c', 'd', 'e', 'f')):
         g.add_vertex(element, index)
@@ -124,8 +124,8 @@ def build_graph():
         print(key, [i.id for i in value])
     
     
-    g.dijktra(g.get_vertex('b'))
-    g.camino(g.get_vertex('b'), g.get_vertex('f'))
+    g.dijktra(g.get_vertex('a'))
+    
     print("\nLos valores de la gráfica son los siguientes: ")
     g.imprimir_gráfica()
 

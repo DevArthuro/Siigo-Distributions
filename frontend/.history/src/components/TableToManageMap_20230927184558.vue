@@ -22,7 +22,7 @@
             </div>
           </form>
           <p class="h5 text-start">Configuración de conexiones</p>
-          <form class="form" @submit.prevent="setNewEdge"> <!--form to select the new connection-->
+          <form class="form" @submit.prevent=""> <!--form to select the new connection-->
             <div class="form-floating container mt-2">
               <select class="form-select" v-model="dataNewEdge.first_location">
                 <option value="default">---</option>
@@ -38,7 +38,7 @@
               <label for="" class="form-label ms-2">Conexión De Fin</label>
             </div> 
             <div class="form-floating container mt-2">
-              <input type="number" name="" id="" placeholder="" class="form-control" v-model="dataNewEdge.weight">
+              <input type="number" name="" id="" placeholder="" class="form-control">
               <label for="" class="form-label ms-2">Indique el peso</label>
             </div>
             <div class="text-end mt-2 mb-3 pe-3">
@@ -80,12 +80,8 @@ const setNewNode = () => {
 
 const setNewEdge = () => {
   const dataNoReactive = {
-    first_location: dataNewEdge.value.first_location, //
-    second_location: dataNewEdge.value.second_location,
-    weight: dataNewEdge.value.weight,
+
   }
-  graph.setEdge(data.position, dataNoReactive)
-  emits('reload')
 }
 
 const data = defineProps({

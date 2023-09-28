@@ -57,6 +57,7 @@ const reload = () => {
   codeUpdateMap()
 }
 
+
 const codeUpdateMap = () => {
   currentInfo.value = data.value[counter.value];
   const container = document.getElementById("sigma-container");
@@ -72,7 +73,7 @@ const codeUpdateMap = () => {
   // Agrega ejes
   for (let item of currentInfo.value.connections)
   {
-    graph.addEdge(item.first_location, item.second_location, {id: item.id, color: "black"});
+    graph.addEdge(item.first_location, item.second_location, {color: "black"});
   }
 
   // Initialize Sigma.js after the container is available

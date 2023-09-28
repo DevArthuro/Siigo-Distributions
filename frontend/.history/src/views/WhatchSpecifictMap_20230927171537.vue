@@ -1,9 +1,9 @@
 <template>
     <navbar/>
-    <!--{{ data }}-->
+    {{ data }}
       <div class="container  mt-4">
         <div class="row">
-          <tableToManageMap :data="data" :position="counter" @reload="reload"/>
+          <tableToManageMap :data="data" :position="counter" />
           <div class=" col-lg-7 ms-lg-3 col-ms-12">
               <div id="sigma-container" class="sigma-container" style="height: 75vh; padding: 0; margin: 0 magin-top: 10px;"></div>
               <div class="d-flex justify-content-between mt-4">
@@ -26,7 +26,23 @@ import tableToManageMap from '../components/TableToManageMap.vue'
 
 const dataStore = useDataGraph()
 
-const data = ref(dataStore.getData())
+const getData = () =>
+    {
+      fetch("http://172.18.100.67:8000/map-routes/", {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json;',
+          'Authorization': 'Token 8a0af303301ae408ec1d7d496d3f1f8c7743ee0e'
+        }
+      })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        return json
+      })
+      .catch(err => err)
+      ;
+    }
 
 const currentInfo = ref('')
 
@@ -53,9 +69,6 @@ const decrease = () => {
 
 }
 
-const reload = () => {
-  codeUpdateMap()
-}
 
 const codeUpdateMap = () => {
   currentInfo.value = data.value[counter.value];
@@ -72,7 +85,7 @@ const codeUpdateMap = () => {
   // Agrega ejes
   for (let item of currentInfo.value.connections)
   {
-    graph.addEdge(item.first_location, item.second_location, {id: item.id, color: "black"});
+    graph.addEdge(item.first_location, item.second_location, {color: "black"});
   }
 
   // Initialize Sigma.js after the container is available
@@ -85,7 +98,7 @@ onUpdated(()=>{
 })
 
 onMounted(() => {
-  
+  const data = ref(getData())
   currentInfo.value = data.value[counter.value]
   codeUpdateMap()
 });

@@ -22,7 +22,7 @@
             </div>
           </form>
           <p class="h5 text-start">Configuración de conexiones</p>
-          <form class="form" @submit.prevent="setNewEdge"> <!--form to select the new connection-->
+          <form class="form" @submit.prevent=""> <!--form to select the new connection-->
             <div class="form-floating container mt-2">
               <select class="form-select" v-model="dataNewEdge.first_location">
                 <option value="default">---</option>
@@ -85,7 +85,6 @@ const setNewEdge = () => {
     weight: dataNewEdge.value.weight,
   }
   graph.setEdge(data.position, dataNoReactive)
-  emits('reload')
 }
 
 const data = defineProps({
