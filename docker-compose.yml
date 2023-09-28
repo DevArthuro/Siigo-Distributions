@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  pgdb:
+    image: postgres:16rc1
+    container_name: pgdb-service
+    environment:
+    - POSTGRES_DB=siigo_distributions
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+    volumes:
+    - ./pgdb:/var/lib/postgresql/data
+    ports:
+    - '5433:5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: django_app/DockerFile
+    container_name: django-service
+    volumes:
+    - ./django_app/:/django_app
+    ports:
+    - '8000:8000'
+    environment:
+      - DEBUG=True
+      - DATABASE_URL=postgres://postgres:postgres@pgdb:5432/siigo_distributions
+    depends_on:
+      pgdb:
+        condition: service_healthy
+    command: bash -c 'python manage.py migrate && python manage.py runserver 0.0.0.0:8000'
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: DockerFile
+    container_name: frontend-service
+    volumes:
+    - /app/node_modules
+    - ./vue_app/:/vue_app
+    ports:
+    - '8080:8080'

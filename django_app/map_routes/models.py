@@ -1,5 +1,6 @@
 from django.db import models
 from utils.models import BaseModel
+from locations.models import Location
 from uuid import uuid4
 from django.template.defaultfilters import slugify
 
@@ -21,12 +22,19 @@ class MapRoute(BaseModel):
         db_index=True
     )
 
-    """starts_at = models.ForeignKey(
+    starts_at = models.ForeignKey(
         Location,
         related_name='connections_starts_at',
         on_delete=models.CASCADE,
         null=True
-    )"""
+    )
+
+    ends_at = models.ForeignKey(
+        Location,
+        related_name='connections_ends_at',
+        on_delete=models.CASCADE,
+        null=True
+    )
 
     """connections = models.ManyToManyField(
         Connection,
