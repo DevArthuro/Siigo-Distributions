@@ -33,8 +33,8 @@ export const useDataGraph = defineStore("GraphData", {
 
     async setNewNodo(map)
     {
-      const url = this.url + `/locations/${map}`
-    },
+      const url = this.url + `/locations/${}`
+    }
 
     getData(slug) {
       
