@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const useDataGraph = defineStore("GraphData", {
   state: () => ({
-    url: "http://172.18.100.67:8000",
+    url: "http://172.18.100.67:8000/map-routes/",
     data: []
 
   }),
@@ -12,7 +12,7 @@ export const useDataGraph = defineStore("GraphData", {
     async getMaps()
     {
         try{
-          const url = this.url + "/map-routes/"
+          const url = "http://172.18.100.67:8000/map-routes/"
           const request = await axios.get(url, {
             headers: {
               'Content-Type': 'application/json',
@@ -29,11 +29,6 @@ export const useDataGraph = defineStore("GraphData", {
         {
           return error
         }
-    },
-
-    async setNewNodo(map)
-    {
-      const url = this.url + `/locations/${map}`
     },
 
     getData(slug) {

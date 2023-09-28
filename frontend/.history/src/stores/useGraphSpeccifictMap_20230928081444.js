@@ -31,10 +31,10 @@ export const useDataGraph = defineStore("GraphData", {
         }
     },
 
-    async setNewNodo(map)
+    async setNewNodo()
     {
-      const url = this.url + `/locations/${map}`
-    },
+      const url 
+    }
 
     getData(slug) {
       

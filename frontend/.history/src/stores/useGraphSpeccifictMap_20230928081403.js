@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const useDataGraph = defineStore("GraphData", {
   state: () => ({
-    url: "http://172.18.100.67:8000",
+    url: "http://172.18.100.67:8000/map-routes/",
     data: []
 
   }),
@@ -31,10 +31,10 @@ export const useDataGraph = defineStore("GraphData", {
         }
     },
 
-    async setNewNodo(map)
+    async setNewNodo()
     {
-      const url = this.url + `/locations/${map}`
-    },
+      const url 
+    }
 
     getData(slug) {
       

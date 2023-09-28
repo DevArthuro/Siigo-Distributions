@@ -1,9 +1,9 @@
 <template>
     <navbar/>
-    <div v-if="dataStore.data.length > 0" >
+    <div v-if="data.length > 0">
       <div class="container  mt-4">
         <div class="row">
-          <tableToManageMap :data="dataStore.data" :position="counter" @reload="reload"/>
+          <tableToManageMap :data="data" :position="counter" @reload="reload"/>
           <div class=" col-lg-7 ms-lg-3 col-ms-12">
               <div id="sigma-container" class="sigma-container" style="height: 75vh; padding: 0; margin: 0 magin-top: 10px;"></div>
               <div class="d-flex justify-content-between mt-4">
@@ -15,15 +15,29 @@
       </div>
     </div>
     <div v-else>
-      <Loader/>
+      <div class="container justify-content-center aling-items-center">
+        <div class="loader">
+          <div class="bar1"></div>
+          <div class="bar2"></div>
+          <div class="bar3"></div>
+          <div class="bar4"></div>
+          <div class="bar5"></div>
+          <div class="bar6"></div>
+          <div class="bar7"></div>
+          <div class="bar8"></div>
+          <div class="bar9"></div>
+          <div class="bar10"></div>
+          <div class="bar11"></div>
+          <div class="bar12"></div>
+      </div>
+      </div>
     </div>
 
 </template>
 
 <script setup>
 import navbar from '../components/Navbar.vue'
-import Loader from '../components/Loader.vue'
-import {computed, onMounted, onUpdated, reactive, ref, onBeforeMount } from 'vue'
+import {computed, onMounted, onUpdated, reactive, ref } from 'vue'
 import Graph from "graphology";
 import Sigma from "sigma";
 import { useDataGraph } from '../stores/useGraphSpeccifictMap'
@@ -31,7 +45,7 @@ import tableToManageMap from '../components/TableToManageMap.vue'
 
 const dataStore = useDataGraph()
 
-const response = ref('')
+const data = ref(dataStore.getData())
 
 const currentInfo = ref('')
 
@@ -40,7 +54,7 @@ const counter = ref(0);
 // Modifica la función decrease para que llame a showMapComputed
 const increase = () => {
   
-  if (counter.value < dataStore.data.length-1)
+  if (counter.value < data.value.length-1)
   {
     
     counter.value++
@@ -63,16 +77,15 @@ const reload = () => {
 }
 
 const codeUpdateMap = () => {
-  currentInfo.value = dataStore.data[counter.value];
+  currentInfo.value = data.value[counter.value];
   const container = document.getElementById("sigma-container");
   const graph = new Graph();
 
   container.innerHTML = '';
   // Agrega nodos
-  console.log(currentInfo.value)
   for (let item of currentInfo.value.locations)
   {
-    graph.addNode(item.label, { x: item.position_x, y: item.position_y, size: 5, label: item.label, color: "blue" });
+    graph.addNode(item.id, { x: item.position_x, y: item.position_y, size: 5, label: item.label, color: "blue" });
   }
   
   // Agrega ejes
@@ -90,21 +103,11 @@ onUpdated(()=>{
   codeUpdateMap();
 })
 
-if (dataStore.data.length > 0)
-{
-  onMounted(() => {
-    
-    currentInfo.value = dataStore.data[counter.value]
-    codeUpdateMap()
-  });
-
-}
-
-onBeforeMount(() => {
-  const data = dataStore.getMaps()
-  response.value = data
-})
-
+onMounted(() => {
+  
+  currentInfo.value = data.value[counter.value]
+  codeUpdateMap()
+});
 </script>../../frontend/node_modules/vue-router../../frontend/node_modules/sigma
 
 <style scoped>
@@ -114,5 +117,4 @@ onBeforeMount(() => {
   background-size: cover;
   border-radius: 30px;
 }
-
 </style>
