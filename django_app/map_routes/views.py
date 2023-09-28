@@ -222,14 +222,12 @@ def get_most_optimal_path(self, request, map_route_slug, format=None):
         vertexes.append(new_vertex)
     
     starts_at = map_route.starts_at.id.hex
-    ends_at = map_route.ends_at.id.hex
     
     try:
         build_graph(
             edges, 
             vertexes, 
-            starts_at, 
-            ends_at
+            starts_at
         )
     except:
         pass
