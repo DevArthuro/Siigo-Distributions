@@ -125,7 +125,7 @@ def build_graph():
     
     
     g.dijktra(g.get_vertex('b'))
-    print(g.camino(g.get_vertex('b'), g.get_vertex('f')))
+    g.camino(g.get_vertex('b'), g.get_vertex('f'))
     print("\nLos valores de la gráfica son los siguientes: ")
     g.imprimir_gráfica()
 

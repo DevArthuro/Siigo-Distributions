@@ -71,6 +71,8 @@ const dataNewEdge = ref({
 const setNewNode = () => {
   const response = graph.setNewNodo(data.data[data.position].slug, dataNewNode.value.label, dataNewNode.value.position_x, dataNewNode.value.position_y)
   console.log(response)
+
+  alert(response[1])
   emits('reload');
 
 }

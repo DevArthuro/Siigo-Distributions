@@ -2,7 +2,7 @@
     <navbar/>
     <div v-if="dataStore.data.length > 0" >
       <div class="container  mt-4">
-        <div v-if="dataStore.message != ''" class="alert alert-warning" role="alert">
+        <div v-if="dataStore.message != "" class="alert alert-warning" role="alert">
           {{ dataStore.message }}
         </div>
         <div class="row">
@@ -13,26 +13,6 @@
               <div class="d-flex justify-content-between mt-4">
                 <button class="h4 btn btn-warning m-auto" @click="decrease">Anterior</button>
                 <button class="h4 btn btn-warning m-auto" @click="increase">Siguiente</button>
-              </div>
-              <div class="d-flex justify-content-between mt-4">
-                <div class="form-floating container mt-2">
-                  <select class="form-select" v-model="dataLocations.first_location">
-                    <option value="default">---</option>
-                    <option v-for="item in currentInfo.locations" :key="item.id" :value="item.id">{{ item.label }}</option>
-                  </select>
-                  <label for="" class="form-label ms-2">Conexión De inicio</label>
-                </div>  
-                <div class="form-floating container mt-2">
-                  <select class="form-select" v-model="dataLocations.second_location">
-                    <option value="default">---</option>
-                    <option v-for="item in currentInfo.locations" :key="item.id" :value="item.id">{{ item.label }}</option>
-                  </select>
-                  <label for="" class="form-label ms-2">Conexión De Fin</label>
-                </div>
-                <div>
-
-                  <button class="h4 btn btn-warning m-auto mt-3 mb-3" @click="calculate_dijkstra">Calcular</button>
-                </div>
               </div>
           </div>
         </div>
@@ -55,11 +35,6 @@ import tableToManageMap from '../components/TableToManageMap.vue'
 
 const dataStore = useDataGraph()
 
-const dataLocations = ref({
-  fist_location: '',
-  second_location: ''
-})
-
 const response = ref('')
 
 const currentInfo = ref('')
@@ -75,15 +50,6 @@ const increase = () => {
     counter.value++
   }
 
-}
-
-const calculate_dijkstra = () => {
-  const fist_location = dataLocations.value.fist_location
-  const second_location = dataLocations.value.second_location
-  const slug_map = currentInfo.value.slug
-
-  const response = dataStore.calculateAlgorithm(slug_map, fist_location, second_location)
-  console.log(response)
 }
 
 const decrease = () => {

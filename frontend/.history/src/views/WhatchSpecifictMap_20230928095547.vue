@@ -82,8 +82,7 @@ const calculate_dijkstra = () => {
   const second_location = dataLocations.value.second_location
   const slug_map = currentInfo.value.slug
 
-  const response = dataStore.calculateAlgorithm(slug_map, fist_location, second_location)
-  console.log(response)
+  dataStore.calculateAlgorithm(slug_map, fist_location, second_location)
 }
 
 const decrease = () => {

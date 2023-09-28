@@ -69,10 +69,14 @@ const dataNewEdge = ref({
 })
 
 const setNewNode = () => {
-  const response = graph.setNewNodo(data.data[data.position].slug, dataNewNode.value.label, dataNewNode.value.position_x, dataNewNode.value.position_y)
-  console.log(response)
-  emits('reload');
-
+  const dataNoReactive = {
+    label: dataNewNode.value.label,
+    position_x: dataNewNode.value.position_x,
+    position_y: dataNewNode.value.position_y,
+  }
+  const response = graph.setNewNodo(data.data.slug, dataNewNode.value.label, dataNewNode.value.position_x, dataNewNode.value.position_y)
+  graph.setNewNodo(data.position, dataNoReactive);
+  emits('reload')
 }
 
 const setNewEdge = () => {

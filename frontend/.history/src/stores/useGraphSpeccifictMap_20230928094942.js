@@ -78,10 +78,7 @@ export const useDataGraph = defineStore("GraphData", {
             'Authorization': 'Token 8a0af303301ae408ec1d7d496d3f1f8c7743ee0e'
           }
         }
-        const request = await axios.post(url, data, config)
-        const info = await request.data
-        console.log(info)
-        return info
+        const request = axios.post(url, data, )
       }
       catch(error)
       {

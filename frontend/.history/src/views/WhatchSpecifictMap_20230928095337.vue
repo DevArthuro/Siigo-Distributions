@@ -31,7 +31,7 @@
                 </div>
                 <div>
 
-                  <button class="h4 btn btn-warning m-auto mt-3 mb-3" @click="calculate_dijkstra">Calcular</button>
+                  <button class="h4 btn btn-warning m-auto mt-3 mb-3">Calcular</button>
                 </div>
               </div>
           </div>
@@ -78,12 +78,9 @@ const increase = () => {
 }
 
 const calculate_dijkstra = () => {
+  console.log(currentInfo.value)
   const fist_location = dataLocations.value.fist_location
   const second_location = dataLocations.value.second_location
-  const slug_map = currentInfo.value.slug
-
-  const response = dataStore.calculateAlgorithm(slug_map, fist_location, second_location)
-  console.log(response)
 }
 
 const decrease = () => {
